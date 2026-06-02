@@ -1,0 +1,92 @@
+<div class="products-header">
+
+    <div class="title-group">
+        <span class="subtitle">Gerenciamento</span>
+        <h1>Produtos</h1>
+    </div>
+
+    <button
+        *ngIf="!(id > 0) && !new"
+        class="btn-add-product"
+        routerLink="/main/products/new"
+    >
+        <span>+</span>
+        Novo Produto
+    </button>
+
+</div>
+<div *ngIf="!(id > -1) && !new">
+    <table class="table table-striped table-hover table-custon">
+        <thead>
+            <th (click)="orderByRel('id')">Id</th>
+            <th (click)="orderByRel('name')">Descrição</th>
+            <th (click)="orderByRel('um')">UM</th>
+            <th (click)="orderByRel('status')">Situação</th>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let items of productsOrdered;let i = index">
+                <td>{{items.id}}</td>
+                <td>{{items.name}}</td>
+                <td>{{[items.um]}}</td>
+                <td>{{['Ativo','Inativo'][items.status]}}</td>
+                <td>
+                    <button class="btn btn-outline-secondary btn-sm" routerLink="/main/products/{{items.id}}">
+                        <mat-icon fontIcon="edit"></mat-icon>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-outline-danger btn-sm" (click)="delete(i,items.id)">
+                        <mat-icon fontIcon="delete"></mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="(id > 0) || new">
+    <div class="row" [formGroup]="form">
+        <div class="col-md-1">
+            <label for="form-desc">Id:</label>
+            <input class="form-control" id="form-desc" type="number" value="{{id}}" [disabled]="true">
+        </div>
+        <div class="col-md-5">
+            <label for="form-desc">Descrição:</label>
+            <input class="form-control" id="form-desc" maxlength="64" formControlName="name">
+        </div>
+
+        <div class="col-md-5">
+            <label for="form-desc2">Descrição 2:</label>
+            <textarea class="form-control" maxlength="1024" formControlName="name2" id="form-desc2"></textarea>
+        </div>
+        <div class="col-md-2">
+            <label for="form-conv">Conversor:</label>
+            <input class="form-control" id="form-deconvsc" maxlength="64" type="number" formControlName="converter">
+        </div>
+        <div class="col-md-2">
+            <label for="form-status">Situação:</label>
+            <select class="form-control" id="form-status" formControlName="status">
+                <option *ngFor="let itemsStatus of ['Ativo','Inativo'];let iStatus = index" [value]="iStatus">
+                    {{itemsStatus}}</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="form-status">Unidade Medida:</label>
+            <select class="form-control" id="form-status" formControlName="um">
+                <option *ngFor="let itemsUM of ['UN','KG']" [value]="itemsUM">{{itemsUM}}</option>
+            </select>
+        </div>
+    </div>
+            <hr>
+
+    <div class="row">
+        <div class="col-md-9 col-12"></div>
+        <div class="col-md-3 col-12">
+            <button class="btn btn-sm btn-outline-danger" routerLink="../">Descartar Alterações</button>
+            <button *ngIf="new" class="btn btn-sm btn-outline-primary" (click)="create()">Criar</button>
+            <button *ngIf="!new" class="btn btn-sm btn-outline-primary" (click)="update()">Editar</button>
+        </div>
+    </div>
+</div>

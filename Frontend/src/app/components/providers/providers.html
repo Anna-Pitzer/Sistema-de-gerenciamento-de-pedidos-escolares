@@ -1,0 +1,83 @@
+<div class="providers-header">
+
+    <div class="title-wrapper">
+
+        <div class="title-group">
+            <span class="subtitle">Gerenciamento</span>
+            <h1>Fornecedores</h1>
+        </div>
+
+    </div>
+
+    <button
+        *ngIf="!(id > 0) && !new"
+        class="btn-add-provider"
+        routerLink="/main/providers/new"
+    >
+        <span class="plus">+</span>
+        <span>Novo Fornecedor</span>
+    </button>
+
+</div>
+<div *ngIf="!(id > -1) && !new">
+
+    <table class="table table-striped table-hover table-custon">
+        <thead>
+            <th>Id</th>
+            <th>Descrição</th>
+            <th>Situação</th>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let items of providers;let i = index">
+                <td>{{items.id}}</td>
+                <td>{{items.name}}</td>
+                <td>{{['Ativo','Inativo'][items.status]}}</td>
+                <td>
+                    <button class="btn btn-outline-secondary btn-sm" routerLink="/main/providers/{{items.id}}">
+                        <mat-icon fontIcon="edit"></mat-icon>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-outline-danger btn-sm" (click)="delete(i,items.id)">
+                        <mat-icon fontIcon="delete"></mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div *ngIf="(id > 0) || new" [formGroup]="form">
+    <div class="row" >
+        <div class="col-md-1">
+            <label for="form-desc">Id:</label>
+            <input class="form-control" id="form-desc" type="number" value="{{id}}" [disabled]="true">
+        </div>
+        <div class="col-md-5">
+            <label for="form-desc">Descrição:</label>
+            <input class="form-control" id="form-desc" maxlength="64" formControlName="name">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label for="form-status">Situação:</label>
+            <select class="form-control" id="form-status" formControlName="status">
+                <option *ngFor="let itemsStatus of ['Ativo','Inativo'];let iStatus = index" [value]="iStatus">
+                    {{itemsStatus}}</option>
+            </select>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-9 col-12"></div>
+        <div class="col-md-3 col-12">
+            <button class="btn btn-sm btn-outline-danger" routerLink="../">Descartar Alterações</button>
+            <button *ngIf="new" class="btn btn-sm btn-outline-primary" (click)="create()" [disabled]="!form.valid">Criar</button>
+            <button *ngIf="!new" class="btn btn-sm btn-outline-primary" (click)="update()">Editar</button>
+        </div>
+    </div>
+</div>

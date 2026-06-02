@@ -1,0 +1,116 @@
+<div class="orders-container">
+
+    <div class="orders-header">
+        <div>
+            <h2>Pedidos</h2>
+            <p>Gerencie os pedidos em aberto e finalizados</p>
+        </div>
+
+        <button class="new-order-btn" routerLink="/main/order/new">
+            <mat-icon fontIcon="add"></mat-icon>
+            Novo Pedido
+        </button>
+    </div>
+
+    <div class="table-wrapper">
+
+        <mat-tab-group class="custom-tabs">
+
+            <mat-tab *ngFor="let itemsTab of ['Em aberto','Finalizados'];let iTab = index"
+                label="{{itemsTab}}">
+
+                <table class="table table-hover align-middle table-custom">
+
+                    <thead>
+                        <tr>
+                            <th>Pedido</th>
+                            <th>Fornecedor</th>
+                            <th>Data</th>
+                            <th class="text-end">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let items of (iTab === 0 ? ordersAberto : ordersFinalizado);let i = index">
+
+                            <td>
+                                <span class="order-id">
+                                    #{{items.pedido}}
+                                </span>
+                            </td>
+
+                            <td>
+                                {{items.providername}}
+                            </td>
+
+                            <td>
+                                {{items.datedeliver | date:'dd/MM/yyyy'}}
+                            </td>
+
+                            <td class="text-end">
+
+                                <div class="dropdown">
+
+                                    <button
+                                        class="action-btn dropdown-toggle"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+
+                                        <mat-icon fontIcon="more_horiz"></mat-icon>
+
+                                    </button>
+
+                                    <ul class="dropdown-menu dropdown-menu-end">
+
+                                        <li>
+                                            <a class="dropdown-item"
+                                                (click)="printOrder(items)">
+                                                <mat-icon fontIcon="print"></mat-icon>
+                                                Imprimir
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item"
+                                                routerLink="{{items.pedido}}">
+                                                <mat-icon fontIcon="edit"></mat-icon>
+                                                Editar
+                                            </a>
+                                        </li>
+
+                                        <li *ngIf="iTab === 0">
+                                            <a class="dropdown-item"
+                                                (click)="finishOrder(items)">
+                                                <mat-icon fontIcon="check_circle"></mat-icon>
+                                                Finalizar
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item text-danger"
+                                                (click)="deleteOrder(items)">
+                                                <mat-icon fontIcon="delete"></mat-icon>
+                                                Excluir
+                                            </a>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </mat-tab>
+
+        </mat-tab-group>
+
+    </div>
+
+</div>

@@ -1,0 +1,43 @@
+<div class="sidebar-wrap">
+  <nav class="sidebar" aria-label="Navegação principal">
+    <div class="sidebar-label">Menu</div>
+
+    <a class="nav-item active" routerLink="/main/order" routerLinkActive="active">
+      <div class="active-bar"></div>
+      <mat-icon class="nav-icon">receipt</mat-icon>
+      Pedidos
+      <span class="badge">{{pedidosAberto}}</span>
+    </a>
+
+    <a class="nav-item" routerLink="/main/consumption" routerLinkActive="active">
+      <mat-icon class="nav-icon">bar_chart</mat-icon>
+      Consumo
+    </a>
+
+    <a class="nav-item" routerLink="/main/products" routerLinkActive="active">
+      <mat-icon class="nav-icon">shopping_bag</mat-icon>
+      Produtos
+    </a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Gestão</div>
+
+    <a class="nav-item" routerLink="/main/providers" routerLinkActive="active">
+      <mat-icon class="nav-icon">local_shipping</mat-icon>
+      Fornecedores
+    </a>
+
+    <a class="nav-item" routerLink="/main/schools" routerLinkActive="active">
+      <mat-icon class="nav-icon">apartment</mat-icon>
+      Escolas
+    </a>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-divider"></div>
+      <a class="nav-item" routerLink="/main/my-acount" routerLinkActive="active">
+        <mat-icon class="nav-icon">account_circle</mat-icon>
+        Minha Conta
+      </a>
+    </div>
+  </nav>
+</div>

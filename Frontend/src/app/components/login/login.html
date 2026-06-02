@@ -1,0 +1,37 @@
+<div class="login-page">
+  <div class="login-card">
+
+    <div class="login-logo">
+      <mat-icon>school</mat-icon>
+    </div>
+
+    <p class="login-title">Bem-vindo</p>
+    <p class="login-sub">Entre com suas credenciais para continuar</p>
+
+    <form class="field-group" [formGroup]="form">
+
+      <div class="field-block">
+        <label class="field-label">Nome de usuário</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <input matInput placeholder="seu.usuario" formControlName="username" />
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label">Senha</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <input matInput [type]="hide() ? 'password' : 'text'" placeholder="••••••••" formControlName="password" />
+          <button matIconButton matSuffix (click)="clickEvent($event)" [attr.aria-pressed]="hide()">
+            <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <button class="btn-login" [disabled]="!form.valid" (click)="login()">
+        Entrar
+      </button>
+
+    </form>
+  </div>
+</div>

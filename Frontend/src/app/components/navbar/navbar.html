@@ -1,0 +1,19 @@
+<nav class="topbar">
+  <div class="topbar-left">
+    <button class="nav-btn" routerLink="/main" aria-label="Início">
+      <mat-icon>home</mat-icon>
+    </button>
+    <button class="nav-btn" (click)="back()" aria-label="Voltar">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="topbar-divider"></div>
+    <span class="topbar-brand">Merenda</span>
+  </div>
+
+  <div class="topbar-right">
+    <button class="logout-btn" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Sair
+    </button>
+  </div>
+</nav>

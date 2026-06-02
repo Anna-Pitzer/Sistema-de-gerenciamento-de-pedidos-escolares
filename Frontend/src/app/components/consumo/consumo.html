@@ -1,0 +1,93 @@
+<div class="row">
+    <div class="col-md-3">
+        <label for="productSearch">Produto:</label>
+        <input id="productSearch" type="text" [(ngModel)]="productSearch">
+    </div>
+
+    <div class="col-md-4">
+        <h1>Consumo</h1>
+    </div>
+
+    <div class="col-md-3">
+        <button class="btn btn-outline-primary btn-sm" (click)="gravar()">
+            Gravar
+        </button>
+    </div>
+</div>
+
+<table class="table-custon">
+
+    <thead>
+        <tr>
+            <th colspan="2"></th>
+
+            <th
+                *ngFor="let items of schools; let indexschool = index"
+                [ngClass]="{
+                    'columnfocus': indexschool === columnfocus
+                }"
+            >
+                {{items.shortname}}
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <ng-container *ngFor="let items of rel; let rowIndex = index">
+
+            <tr
+                *ngIf="items.name.toUpperCase().indexOf(productSearch.toUpperCase()) > -1"
+                [ngClass]="{
+                    'rowfocus': rowIndex === rowfocus
+                }"
+            >
+
+                <td width="3%">
+                    {{items.id}}
+                </td>
+
+                <td width="20%">
+                    {{items.name}}
+                </td>
+
+                <td
+                    *ngFor="let items2 of items.schools; let indexschool = index"
+
+                    [ngClass]="{
+                        'columnfocus': indexschool === columnfocus,
+                        'crossfocus':
+                            rowIndex === rowfocus &&
+                            indexschool === columnfocus
+                    }"
+
+                    (mouseenter)="
+                        rowfocus = rowIndex;
+                        columnfocus = indexschool
+                    "
+
+                    (mouseleave)="
+                        rowfocus = null;
+                        columnfocus = null
+                    "
+                >
+
+                    <input
+                        [ngClass]="{
+                            'input-destaque':
+                                items2.value !== items2.value2
+                        }"
+
+                        type="number"
+                        [(ngModel)]="items2.value2"
+                    >
+
+                </td>
+
+            </tr>
+
+        </ng-container>
+
+    </tbody>
+
+</table>

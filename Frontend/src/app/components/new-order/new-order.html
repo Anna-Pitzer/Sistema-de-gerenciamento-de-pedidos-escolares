@@ -1,0 +1,116 @@
+<div [formGroup]="form" class="order-container container">
+    <h1>Novo Pedido</h1>
+
+    <div class="row g-3">
+        <div class="col-md-5">
+            <label class="form-label" for="providerf">Fornecedor</label>
+            <select class="form-select" id="providerf" formControlName="provider">
+                <option *ngFor="let items of providers" [value]="items.id">{{items.name}}</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Data de Entrega</label>
+            <input class="form-control" type="date" formControlName="dateDeliver">
+        </div>
+        <div class="col-md-4 btn-add-container">
+            <button class="btn btn-primary w-100" (click)="addItem()">
+                <i class="bi bi-plus-lg"></i> Adicionar Item
+            </button>
+        </div>
+    </div>
+
+    <div class="section-title">Itens do Pedido</div>
+
+    <div class="table-responsive">
+        <table *ngIf="items.controls.length > 0" class="table table-hover">
+            <thead>
+                <tr>
+                    <th width="5%">#</th>
+                    <th width="50%">Produto</th>
+                    <th width="35%">Quantidade</th>
+                    <th width="10%"></th>
+                </tr>
+            </thead>
+            <tbody formArrayName="items">
+                <tr *ngFor="let items1 of items.controls; let i = index" [formGroupName]="i">
+                    <td><span class="badge bg-light text-dark">{{i+1}}</span></td>
+                    <td>
+                        <select class="form-select" formControlName="product">
+                            <option *ngFor="let items of productsOrderByName" [value]="items.id">{{items.name}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="number" step="1" min="0" formControlName="quantity">
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-outline-danger btn-sm" (click)="deleteItem(i)" *ngIf="!visualizar">
+                            Remover
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section-title">Distribuição por Escola</div>
+
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered table-custom">
+            <thead>
+                <tr>
+                    <th colspan="2" class="text-center">Produto</th>
+                    <th *ngFor="let items2 of schools" class="text-center">
+                        {{items2.shortname}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let items1 of schoolsProductItems; let i = index">
+                    <td class="fw-bold text-muted">{{items1.product}}</td>
+                    <td>{{items1.productName}}</td>
+                    <td *ngFor="let items2 of schools">
+                        <input *ngIf="items1.um === 'UN'" 
+                               type="text" 
+                               [(ngModel)]="items1.schools[items2.id]"
+                               [ngModelOptions]="{standalone: true}" 
+                               mask="0*" 
+                               placeholder="0">
+                        
+                        <input *ngIf="items1.um !== 'UN'" 
+                               type="text" 
+                               [(ngModel)]="items1.schools[items2.id]"
+                               [ngModelOptions]="{standalone: true}" 
+                               mask="separator.2" 
+                               thousandSeparator="."
+                               decimalMarker="," 
+                               placeholder="0,00">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="actions-row">
+        <button class="btn btn-light" (click)="cancel()">Cancelar</button>
+
+        <button class="btn btn-secondary px-4"
+                *ngIf="schoolsProductItems.length > 0"
+                (click)="gerarEspelho()">
+            <i class="bi bi-file-earmark-excel"></i> Espelho
+        </button>
+        
+        <button *ngIf="new && !visualizar" 
+                class="btn btn-success px-4" 
+                [disabled]="!form.valid"
+                (click)="create()">
+            Criar Pedido
+        </button>
+        
+        <button *ngIf="!new && !visualizar" 
+                class="btn btn-primary px-4" 
+                [disabled]="!form.valid"
+                (click)="update()">
+            Salvar Alterações
+        </button>
+    </div>
+</div>
