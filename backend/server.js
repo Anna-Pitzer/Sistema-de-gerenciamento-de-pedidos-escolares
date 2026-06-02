@@ -43,27 +43,39 @@ exports.startServer = startServer;
 var https_1 = __importDefault(require("https"));
 var express_1 = __importDefault(require("express"));
 var routes_1 = require("./routes");
+
 function startServer(port, useHttps) {
     var _this = this;
     var cors = require("cors");
     var server = (0, express_1.default)();
+    
     server.use(express_1.default.json());
     server.use(cors({
         origin: '*'
     }));
+    
     var fs = require('fs');
     var path = require('path');
     var distPath = path.join(__dirname, 'public');
-    if (fs.existsSync(distPath)) {
 
-        server.use(express_1.default.static(distPath));
-
-        server.get('*', function (req, res) {
-            res.sendFile(path.join(distPath, 'index.html'));
-        });
-
-    }
     server.use(routes_1.router);
+    
+   
+    if (fs.existsSync(distPath)) {
+        server.use(express_1.default.static(distPath));
+        
+        server.get('*', function (req, res) {
+    
+            if (!req.path.startsWith('/api') && !req.path.startsWith('/order') &&
+                !req.path.startsWith('/login') && !req.path.startsWith('/logout') &&
+                !req.path.startsWith('/schools') && !req.path.startsWith('/products') &&
+                !req.path.startsWith('/providers') && !req.path.startsWith('/consumption') &&
+                !req.path.startsWith('/verify-session') && !req.path.startsWith('/change-password')) {
+                res.sendFile(path.join(distPath, 'index.html'));
+            }
+        });
+    }
+    
     if (!useHttps) {
         (function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
             return [2 /*return*/, server.listen(port)];
@@ -71,8 +83,8 @@ function startServer(port, useHttps) {
     }
     else {
         var options = {
-            key: fs.readFileSync(""),
-            cert: fs.readFileSync(""),
+            key: fs.readFileSync(""), 
+            cert: fs.readFileSync(""), 
         };
         (function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
             return [2 /*return*/, https_1.default.createServer(options, server).listen(port)];
