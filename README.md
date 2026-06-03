@@ -30,7 +30,7 @@ O ecossistema é composto por uma **API REST (Back-end)** e uma **Single Page Ap
 
 ## Funcionalidades do Sistema
 
-* **Autenticação Segura**: Controlo de acessos através de login, logout, validação contínua de token de sessão.
+* **Autenticação Segura**: Controle de acessos através de login, logout, validação contínua de token de sessão.
 * **Módulos CRUD Completos**: Gestão unificada (criar, ler, atualizar e apagar) de três pilares:
   * **Escolas**: Unidades escolares geridas pela rede municipal.
   * **Fornecedores**: Empresas parceiras responsáveis pela entrega das mercadorias.
